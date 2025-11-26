@@ -38,4 +38,9 @@ public class RabbitMQConfig {
                 .to(exchange())
                 .with(routingKey);
     }
+
+    // ConnectionFactory,
+    // RabbitTemplate,
+    // RabbitAdmin
+    // are auto-configured by Spring Boot
 }
