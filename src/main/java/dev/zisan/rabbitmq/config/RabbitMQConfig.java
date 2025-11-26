@@ -1,5 +1,7 @@
 package dev.zisan.rabbitmq.config;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,9 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
+    @Value("${rabbitmq.routing.key}")
+    private String routingKey;
+
     // Bean for Queue
     @Bean
     public Queue queue(){
@@ -24,5 +29,13 @@ public class RabbitMQConfig {
     @Bean
     public TopicExchange exchange(){
         return new TopicExchange(exchange);
+    }
+
+    // binding between queue and exchange
+    @Bean
+    public Binding binding(){
+        return BindingBuilder.bind(queue())
+                .to(exchange())
+                .with(routingKey);
     }
 }
